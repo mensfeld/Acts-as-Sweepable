@@ -6,7 +6,6 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Maciej Mensfeld"]
-  s.cert_chain = ["/home/mencio/.cert_keys/gem-public_cert.pem"]
   s.date = %q{2011-04-09}
   s.description = %q{Adds a class method called sweep to ActiveRecord - used to remove old elements}
   s.email = %q{maciej@mensfeld.pl}
@@ -17,7 +16,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{acts_as_sweepable}
   s.rubygems_version = %q{1.5.2}
-  s.signing_key = %q{/home/mencio/.cert_keys/gem-private_key.pem}
   s.summary = %q{Adds a class method called sweep to ActiveRecord - used to remove old elements}
 
   if s.respond_to? :specification_version then
