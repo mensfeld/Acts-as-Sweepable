@@ -1,8 +1,10 @@
+CHANGELOG.rdoc
+Gemfile
 MIT-LICENSE
+Manifest
 README.md
 Rakefile
 init.rb
 lib/acts_as_sweepable.rb
 spec/acts_as_sweepable_spec.rb
 spec/spec_helper.rb
-Manifest
