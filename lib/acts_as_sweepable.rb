@@ -7,7 +7,15 @@ module Acts
     end
 
     module ClassMethods
-      def sweep(time_ago = nil, conditions = nil, created_or_updated = true)
+      def sweep(*sources)
+        # time_ago = nil, conditions = nil, created_or_updated = true
+        options = sources.extract_options!.stringify_keys
+
+        time_ago = options.delete("time")
+        conditions = options.delete("conditions")
+        created_or_updated = options.delete("active")
+        created_or_updated = true if created_or_updated.nil?
+        
         time = case time_ago
           when /^(\d+)m$/ then Time.now - $1.to_i.minute
           when /^(\d+)h$/ then Time.now - $1.to_i.hour
@@ -29,10 +37,10 @@ module Acts
         # Run on each block of code
         els.each {|el| yield el } if block_given?
 
-        self.delete_all "#{statement} #{conditions}"
+        self.destroy_all "#{statement} #{conditions}"
       end
     end
-    
+
   end
 end
 

@@ -15,23 +15,23 @@ Adds a class method called sweep to ActiveRecord - used to remove old elements.
 ## Example
 
     # Will remove elements older than 10 days
-    MyClass.sweep('10d')
+    MyClass.sweep(:time => '10d')
 
     # Will remove elements older than 10 hours
-    MyClass.sweep('10h')
+    MyClass.sweep(:time => '10h')
 
     # Will remove elements older than 10 minutes
-    MyClass.sweep('10m')
+    MyClass.sweep(:time => '10m')
 
 Params accepted by this method:
 
-* `time_ago` - d(days),h(hours), m(minutes)
+* `time` - d(days),h(hours), m(minutes)
 * `conditions` - additional SQL conditions (like WHERE)
-* `created_or_updated` - (default true) - should it use updated_at and created_at to determine if object is old enough or should it use just created_at.
+* `active` - (default true) - should it use updated_at and created_at to determine if object is old enough or should it use just created_at.
 
 You can also yield a block of code - it will be performed on every object that should be deleted:
 
-    MyClass.sweep('10d') do |el|
+    MyClass.sweep(:time => '10d') do |el|
         el.do_smhtng
     end
 
