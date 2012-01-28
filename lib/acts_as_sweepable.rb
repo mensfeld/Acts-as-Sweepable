@@ -2,6 +2,8 @@
 module Acts
   module AsSweepable
 
+    class InvalidTime < StandardError; end
+
     def self.included(base)
       base.extend ClassMethods
     end
@@ -10,17 +12,18 @@ module Acts
       def sweep(*sources)
         # time_ago = nil, conditions = nil, created_or_updated = true
         options = sources.extract_options!.stringify_keys
+        options = options.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
 
-        time_ago = options.delete("time")
-        conditions = options.delete("conditions")
-        created_or_updated = options.delete("active")
+        time_ago = options.delete(:time)
+        conditions = options.delete(:conditions)
+        created_or_updated = options.delete(:created_or_updated)
         created_or_updated = true if created_or_updated.nil?
         
         time = case time_ago
           when /^(\d+)m$/ then Time.now - $1.to_i.minute
           when /^(\d+)h$/ then Time.now - $1.to_i.hour
           when /^(\d+)d$/ then Time.now - $1.to_i.day
-          else Time.now - 1.hour
+          else raise(InvalidTime, time_ago)
         end
 
         statement = "updated_at < '#{time.to_s(:db)}'"

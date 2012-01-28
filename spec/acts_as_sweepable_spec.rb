@@ -62,9 +62,10 @@ describe CoolElement do
     end
 
     it "should not sweep recently updated objects" do
-      el = subject.create(:updated_at => 1.days.ago, :created_at => 10.days.ago)
-      subject.sweep(:time => '9d', :active => false)
+      el = subject.create(:updated_at => 1.days.ago, :created_at => 11.days.ago)
       subject.all.count.should eql(1)  
+      subject.sweep(:time => '9d', :created_or_updated => false)
+      subject.all.count.should eql(1) 
     end
   end
 

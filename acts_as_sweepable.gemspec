@@ -1,24 +1,22 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{acts_as_sweepable}
-  s.version = "0.1.2"
+  s.name = "acts_as_sweepable"
+  s.version = "0.1.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Maciej Mensfeld"]
-  s.cert_chain = ["/home/mencio/.cert_keys/gem-public_cert.pem"]
-  s.date = %q{2011-04-17}
-  s.description = %q{Adds a class method called sweep to ActiveRecord - used to remove old elements}
-  s.email = %q{maciej@mensfeld.pl}
+  s.date = "2012-01-28"
+  s.description = "Adds a class method called sweep to ActiveRecord - used to remove old elements"
+  s.email = "maciej@mensfeld.pl"
   s.extra_rdoc_files = ["CHANGELOG.rdoc", "README.md", "lib/acts_as_sweepable.rb"]
   s.files = ["CHANGELOG.rdoc", "Gemfile", "MIT-LICENSE", "Manifest", "README.md", "Rakefile", "init.rb", "lib/acts_as_sweepable.rb", "spec/acts_as_sweepable_spec.rb", "spec/spec_helper.rb", "acts_as_sweepable.gemspec"]
-  s.homepage = %q{https://github.com/mensfeld/Acts-as-Sweepable}
+  s.homepage = "https://github.com/mensfeld/Acts-as-Sweepable"
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Acts_as_sweepable", "--main", "README.md"]
   s.require_paths = ["lib"]
-  s.rubyforge_project = %q{acts_as_sweepable}
-  s.rubygems_version = %q{1.5.2}
-  s.signing_key = %q{/home/mencio/.cert_keys/gem-private_key.pem}
-  s.summary = %q{Adds a class method called sweep to ActiveRecord - used to remove old elements}
+  s.rubyforge_project = "acts_as_sweepable"
+  s.rubygems_version = "1.8.15"
+  s.summary = "Adds a class method called sweep to ActiveRecord - used to remove old elements"
 
   if s.respond_to? :specification_version then
     s.specification_version = 3
