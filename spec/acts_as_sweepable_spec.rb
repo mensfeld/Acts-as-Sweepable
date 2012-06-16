@@ -71,6 +71,7 @@ describe CoolElement do
 
   context "When we sweep smthg" do
     it "should be able to perform on each" do
+      subject.expects(:destroy_all)
       2.times { |i| subject.create(:created_at => 10.days.ago, :name => i.to_s) }
       saved = []
       subject.sweep(:time => '1d') do |el|
@@ -78,6 +79,14 @@ describe CoolElement do
       end
       saved.first.to_i.should eql(0)
       saved.last.to_i.should eql(1)
+    end
+  end
+
+  context 'when we want to delete instead of destroying' do
+    it 'should use it instead of destroy' do
+      2.times { |i| subject.create(:created_at => 10.days.ago, :name => i.to_s) }
+      subject.expects(:delete_all)
+      subject.sweep(:time => '1d', :use_delete => true)
     end
   end
 

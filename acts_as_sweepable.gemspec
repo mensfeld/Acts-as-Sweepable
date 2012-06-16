@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = "acts_as_sweepable"
-  s.version = "0.1.3"
+  s.version = "0.1.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Maciej Mensfeld"]
-  s.date = "2012-01-28"
+  s.date = "2012-06-16"
   s.description = "Adds a class method called sweep to ActiveRecord - used to remove old elements"
   s.email = "maciej@mensfeld.pl"
   s.extra_rdoc_files = ["CHANGELOG.rdoc", "README.md", "lib/acts_as_sweepable.rb"]
@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Acts_as_sweepable", "--main", "README.md"]
   s.require_paths = ["lib"]
   s.rubyforge_project = "acts_as_sweepable"
-  s.rubygems_version = "1.8.15"
+  s.rubygems_version = "1.8.10"
   s.summary = "Adds a class method called sweep to ActiveRecord - used to remove old elements"
 
   if s.respond_to? :specification_version then
@@ -23,13 +23,16 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_development_dependency(%q<rspec>, [">= 2.0.0"])
+      s.add_development_dependency(%q<mocha>, [">= 0"])
       s.add_development_dependency(%q<active_record>, [">= 0"])
     else
       s.add_dependency(%q<rspec>, [">= 2.0.0"])
+      s.add_dependency(%q<mocha>, [">= 0"])
       s.add_dependency(%q<active_record>, [">= 0"])
     end
   else
     s.add_dependency(%q<rspec>, [">= 2.0.0"])
+    s.add_dependency(%q<mocha>, [">= 0"])
     s.add_dependency(%q<active_record>, [">= 0"])
   end
 end

@@ -17,6 +17,7 @@ module Acts
         time_ago = options.delete(:time)
         conditions = options.delete(:conditions)
         created_or_updated = options.delete(:created_or_updated)
+        delete = options.delete(:use_delete) || false
         created_or_updated = true if created_or_updated.nil?
         
         time = case time_ago
@@ -40,7 +41,12 @@ module Acts
         # Run on each block of code
         els.each {|el| yield el } if block_given?
 
-        self.destroy_all "#{statement} #{conditions}"
+        if delete
+          self.delete_all "#{statement} #{conditions}"
+        else
+          self.destroy_all "#{statement} #{conditions}"
+        end
+
       end
     end
 

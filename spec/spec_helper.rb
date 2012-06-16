@@ -5,6 +5,11 @@ require 'rubygems'
 require 'sqlite3'
 require 'active_record'
 require 'acts_as_sweepable'
+require 'mocha'
+
+RSpec.configure do |config|
+  config.mock_with :mocha
+end
 
 ActiveRecord::Base.establish_connection(
     :adapter => "sqlite3",
