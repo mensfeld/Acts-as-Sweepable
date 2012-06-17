@@ -2,11 +2,11 @@
 
 Gem::Specification.new do |s|
   s.name = "acts_as_sweepable"
-  s.version = "0.1.4"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Maciej Mensfeld"]
-  s.date = "2012-06-16"
+  s.date = "2012-06-17"
   s.description = "Adds a class method called sweep to ActiveRecord - used to remove old elements"
   s.email = "maciej@mensfeld.pl"
   s.extra_rdoc_files = ["CHANGELOG.rdoc", "README.md", "lib/acts_as_sweepable.rb"]

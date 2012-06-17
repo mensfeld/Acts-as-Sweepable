@@ -1,3 +1,6 @@
+= Version 0.2.0
+* Changes to API (no backword compatibility)
+* Using only updated_at by default
 = Version 0.1.4
 * use_delete - use delete_all instead of destroy_all
 = Version 0.1.3

@@ -12,19 +12,34 @@ describe CoolElement do
 
   context "when object is old enough" do
     it "should be sweeped" do
-      el = subject.create(:created_at => 10.days.ago)
+      el = subject.create(
+        :created_at => 10.days.ago,
+        :updated_at => 10.days.ago
+      )
       subject.sweep(:time => '9d')
       subject.all.count.should eql(0)
-      el = subject.create(:created_at => 10.hours.ago)
+      el = subject.create(
+        :created_at => 10.hours.ago,
+        :updated_at => 10.hours.ago
+      )
       subject.sweep(:time => '9h')
       subject.all.count.should eql(0)
-      el = subject.create(:created_at => 10.minutes.ago)
+      el = subject.create(
+        :created_at => 10.minutes.ago,
+        :updated_at => 10.minutes.ago
+      )
       subject.sweep(:time => '9m')
       subject.all.count.should eql(0)
-      el = subject.create(:created_at => 10.minutes.ago, :updated_at => 1.minutes.ago)
-      subject.sweep(:time => '9m')
+      el = subject.create(
+        :created_at => 10.minutes.ago,
+        :updated_at => 1.minutes.ago
+      )
+      subject.sweep(:time => '9m', :columns => [:created_at])
       subject.all.count.should eql(0)
-      el = subject.create(:created_at => 1.minutes.ago, :updated_at => 10.minutes.ago)
+      el = subject.create(
+        :created_at => 1.minutes.ago,
+        :updated_at => 10.minutes.ago
+      )
       subject.sweep(:time => '9m')
       subject.all.count.should eql(0)
     end 
@@ -36,7 +51,7 @@ describe CoolElement do
       subject.sweep(:time => '11d')
       subject.all.count.should eql(1)
       el = subject.create(:created_at => 10.minutes.ago)
-      subject.sweep(:time => '11m')
+      subject.sweep(:time => '11m', :columns => :created_at)
       subject.all.count.should eql(1)
       el = subject.create(:created_at => 10.hours.ago)
       subject.sweep(:time => '11h')
@@ -46,8 +61,13 @@ describe CoolElement do
   
   context "when we add additional parameter" do
     it "should be used" do
-      el1 = subject.create(:created_at => 10.days.ago, :name => 'First')
-      el2 = subject.create(:created_at => 10.days.ago, :name => 'Second')
+      el1 = subject.create(
+        :created_at => 10.days.ago, :name => 'First')
+      el2 = subject.create(
+        :created_at => 10.days.ago,
+        :updated_at => 10.days.ago,
+        :name => 'Second'
+      )
       subject.sweep(:time => '9d', :conditions => 'name LIKE "Second"')
       subject.all.count.should eql(1)
       subject.all.first.name.should eql "First"
@@ -64,7 +84,7 @@ describe CoolElement do
     it "should not sweep recently updated objects" do
       el = subject.create(:updated_at => 1.days.ago, :created_at => 11.days.ago)
       subject.all.count.should eql(1)  
-      subject.sweep(:time => '9d', :created_or_updated => false)
+      subject.sweep(:time => '9d')
       subject.all.count.should eql(1) 
     end
   end
@@ -72,7 +92,13 @@ describe CoolElement do
   context "When we sweep smthg" do
     it "should be able to perform on each" do
       subject.expects(:destroy_all)
-      2.times { |i| subject.create(:created_at => 10.days.ago, :name => i.to_s) }
+      2.times do |i|
+        subject.create(
+          :created_at => 10.days.ago,
+          :updated_at => 10.days.ago,
+          :name => i.to_s
+        )
+      end
       saved = []
       subject.sweep(:time => '1d') do |el|
         saved << el.name      
@@ -86,7 +112,7 @@ describe CoolElement do
     it 'should use it instead of destroy' do
       2.times { |i| subject.create(:created_at => 10.days.ago, :name => i.to_s) }
       subject.expects(:delete_all)
-      subject.sweep(:time => '1d', :use_delete => true)
+      subject.sweep(:time => '1d', :method => :delete_all)
     end
   end
 

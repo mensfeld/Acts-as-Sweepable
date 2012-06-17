@@ -16,10 +16,10 @@ module Acts
 
         time_ago = options.delete(:time)
         conditions = options.delete(:conditions)
-        created_or_updated = options.delete(:created_or_updated)
-        delete = options.delete(:use_delete) || false
-        created_or_updated = true if created_or_updated.nil?
-        
+        columns = [options.delete(:columns) || :updated_at].flatten
+        remove_method = options.delete(:method) || :destroy_all
+
+
         time = case time_ago
           when /^(\d+)m$/ then Time.now - $1.to_i.minute
           when /^(\d+)h$/ then Time.now - $1.to_i.hour
@@ -27,26 +27,22 @@ module Acts
           else raise(InvalidTime, time_ago)
         end
 
-        statement = "updated_at < '#{time.to_s(:db)}'"
-
-        if created_or_updated
-          statement += " OR created_at < '#{time.to_s(:db)}')"
-          statement = '('+statement
+        statement = []
+        columns.each do |column|
+          statement << "#{column}  < '#{time.to_s(:db)}'"
         end
+
+        statement = "(#{statement.join(' OR ')})"
 
         conditions = "AND #{conditions} " if conditions
 
-        els = self.where("#{statement} #{conditions}")
-
         # Run on each block of code
-        els.each {|el| yield el } if block_given?
-
-        if delete
-          self.delete_all "#{statement} #{conditions}"
-        else
-          self.destroy_all "#{statement} #{conditions}"
+        if block_given?
+          els = self.where("#{statement} #{conditions}")
+          els.each {|el| yield el }
         end
 
+        self.send(remove_method, "#{statement} #{conditions}")
       end
     end
 
@@ -54,4 +50,3 @@ module Acts
 end
 
 ActiveRecord::Base.send(:include, Acts::AsSweepable)
-
