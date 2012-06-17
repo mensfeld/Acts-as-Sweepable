@@ -2,7 +2,7 @@ require 'rubygems'
 require 'rake'
 require 'echoe'
 
-Echoe.new('acts_as_sweepable', '0.2.0') do |p|
+Echoe.new('acts_as_sweepable', '0.2.1') do |p|
   p.description    = "Adds a class method called sweep to ActiveRecord - used to remove old elements"
   p.url            = "https://github.com/mensfeld/Acts-as-Sweepable"
   p.author         = "Maciej Mensfeld"

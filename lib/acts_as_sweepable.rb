@@ -39,10 +39,18 @@ module Acts
         # Run on each block of code
         if block_given?
           els = self.where("#{statement} #{conditions}")
-          els.each {|el| yield el }
+          els.find_each {|el| yield el }
         end
 
-        self.send(remove_method, "#{statement} #{conditions}")
+        res = self.send(remove_method, "#{statement} #{conditions}")
+        case res
+          when Integer
+            res
+          when nil
+            0
+          when Array
+            res.length
+        end
       end
     end
 
