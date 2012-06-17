@@ -2,9 +2,6 @@ require 'spec_helper'
 
 ROOT = File.expand_path(File.dirname(__FILE__))
 
-class CoolElement < ActiveRecord::Base
-end
-
 describe CoolElement do
   subject { CoolElement }
 
@@ -116,4 +113,24 @@ describe CoolElement do
     end
   end
 
+end
+
+describe IntElement do
+  subject { IntElement }
+
+  before(:each){ IntElement.destroy_all}
+
+  context 'when we have a integer timestamp' do
+    it 'should work in a normal way' do
+      el = subject.create(
+        :timestamp => 10.days.ago.to_i
+      )
+      subject.sweep(:time => '9d', :format => :integer, :columns => :timestamp)
+      subject.all.count.should eql(0)
+
+      el = subject.create(:timestamp => 10.days.ago.to_i)
+      subject.sweep(:time => '11d', :format => :integer, :columns => :timestamp)
+      subject.all.count.should eql(1)
+    end
+  end
 end

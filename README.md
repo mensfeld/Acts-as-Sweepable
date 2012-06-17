@@ -28,7 +28,8 @@ Params accepted by this method:
 * `time` - d(days),h(hours), m(minutes)
 * `conditions` - additional SQL conditions (like WHERE)
 * `columns` - (default :updated_at) - which columns should it consider when removing
-* `method` - (default: destroy_all) - which method should it use to destroy objects
+* `method` - (default: :destroy_all) - which method should it use to destroy objects
+* `format` - (default: :db) - should it use to_s(:db) or to_i
 
 You can also yield a block of code - it will be performed on every object that should be deleted:
 

@@ -23,3 +23,12 @@ ActiveRecord::Schema.define do
     end
 end
 
+ActiveRecord::Schema.define do
+    create_table :int_elements do |table|
+      table.text :name
+      table.integer :timestamp
+    end
+end
+
+class CoolElement < ActiveRecord::Base; end
+class IntElement  < ActiveRecord::Base; end

@@ -2,7 +2,8 @@
 module Acts
   module AsSweepable
 
-    class InvalidTime < StandardError; end
+    class InvalidTime   < StandardError; end
+    class InvalidFormat < StandardError; end
 
     def self.included(base)
       base.extend ClassMethods
@@ -18,18 +19,28 @@ module Acts
         conditions = options.delete(:conditions)
         columns = [options.delete(:columns) || :updated_at].flatten
         remove_method = options.delete(:method) || :destroy_all
-
+        time_format = options.delete(:format) || :db
 
         time = case time_ago
+          when /^(\d+)s$/ then Time.now - $1.to_i.second
           when /^(\d+)m$/ then Time.now - $1.to_i.minute
           when /^(\d+)h$/ then Time.now - $1.to_i.hour
           when /^(\d+)d$/ then Time.now - $1.to_i.day
           else raise(InvalidTime, time_ago)
         end
 
+        case time_format
+          when :db then
+            time = time.to_s(:db)
+          when :integer then
+            time = time.to_i
+          else
+            raise(InvalidFormat, time_format)
+        end
+
         statement = []
         columns.each do |column|
-          statement << "#{column}  < '#{time.to_s(:db)}'"
+          statement << "#{column}  < '#{time}'"
         end
 
         statement = "(#{statement.join(' OR ')})"
