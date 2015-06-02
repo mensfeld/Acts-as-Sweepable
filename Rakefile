@@ -7,6 +7,7 @@ Echoe.new('acts_as_sweepable', '0.2.2') do |p|
   p.url            = "https://github.com/mensfeld/Acts-as-Sweepable"
   p.author         = "Maciej Mensfeld"
   p.email          = "maciej@mensfeld.pl"
+  p.license        = 'MIT'
   p.ignore_pattern = ["tmp/*", "script/*"]
   p.development_dependencies = ["rspec >=2.0.0", 'mocha', "active_record"]
 end
